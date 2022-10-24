@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/da9661f08d.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      html,
+      body {
+        font-size: 20px;
+        font-family: sans-serif;
+        text-align: center;
+        position: relative;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .button-container {
+        position: absolute;
+        width: 100%;
+        top: 250px;
+      }
+      .but {
+        padding: 10px;
+        width: 200px;
+        font-size: 50px;
+        border: 2px solid black;
+        border-radius: 10px;
+        margin-left: 20px;
+      }
+      .but:hover {
+        opacity: 0.8;
+      }
+      .but:active {
+        opacity: 0.6;
+      }
+      .rock {
+        background-color: rgb(107, 213, 118);
+      }
+      .paper {
+        background-color: lightcoral;
+      }
+      .scissor {
+        background-color: cyan;
+      }
+      .comp-choice {
+        font-size: 40px;
+        position: absolute;
+        width: 100%;
+        top: 100px;
+      }
+      .result {
+        position: absolute;
+        width: 100%;
+        top: 600px;
+        font-size: 100px;
+      }
+      .make-choice {
+        margin-top: 40px;
+
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button-container">
+      <button onclick="rock()" class="but rock">
+        <i class="fa-solid fa-hand-back-fist"></i>
+      </button>
+      <button onclick="paper()" class="but paper">
+        <i class="fa-solid fa-hand"></i>
+      </button>
+      <button onclick="scissor()" class="but scissor">
+        <i class="fa-solid fa-hand-scissors"></i>
+      </button>
+      <div class="make-choice">Make Your choice</div>
+    </div>
+    <div id="compChoice" class="comp-choice"></div>
+    <div id="final_result" class="result"></div>
+
+    <script>
+      let player_pick = "";
+      let computer_pick = "";
+      let answer = "";
+      let div_append = document.getElementById("final_result");
+      let comp = document.getElementById("compChoice");
+      function computerChoice() {
+        let comp_choice = "";
+        let number = Math.floor(Math.random() * 3);
+        if (number == 0) {
+          comp_choice = "rock";
+        } else if (number == 1) {
+          comp_choice = "scissor";
+        } else if (number == 2) {
+          comp_choice = "paper";
+        }
+        return comp_choice;
+      }
+      function check_winner(player, comp) {
+        let result = "";
+        if (player == "rock" && comp == "rock") {
+          result = "draw";
+        } else if (player == "rock" && comp == "paper") {
+          result = "lose";
+        } else if (player == "rock" && comp == "scissor") {
+          result = "win";
+        }
+
+        if (player == "paper" && comp == "paper") {
+          result = "draw";
+        } else if (player == "paper" && comp == "scissor") {
+          result = "lose";
+        } else if (player == "paper" && comp == "rock") {
+          result = "win";
+        }
+
+        if (player == "scissor" && comp == "scissor") {
+          result = "draw";
+        } else if (player == "scissor" && comp == "rock") {
+          result = "lose";
+        } else if (player == "scissor" && comp == "paper") {
+          result = "win";
+        }
+        return result;
+      }
+      function win() {
+        let win = document.createElement("div");
+        win.innerText = "YOU WON! 😀";
+        div_append.appendChild(win);
+      }
+      function lose() {
+        let lose = document.createElement("div");
+        lose.innerText = "YOU LOST! 😭";
+        div_append.appendChild(lose);
+      }
+      function draw() {
+        let draw = document.createElement("div");
+        draw.innerText = "OOPS DRAW! 😐";
+        div_append.appendChild(draw);
+      }
+      function render_comp_choice(computer_pick) {
+        let pick = document.createElement("div");
+        pick.innerText = "Computer Choice: " + computer_pick;
+        comp.appendChild(pick);
+      }
+      function rock() {
+        player_pick = "rock";
+        render();
+      }
+      function paper() {
+        player_pick = "paper";
+        render();
+      }
+      function scissor() {
+        player_pick = "scissor";
+        render();
+      }
+      function render() {
+        div_append.innerHTML = "";
+        comp.innerHTML = "";
+        computer_pick = computerChoice();
+        render_comp_choice(computer_pick);
+        answer = check_winner(player_pick, computer_pick);
+        if (answer == "win") {
+          win();
+        } else if (answer == "lose") {
+          lose();
+        } else if (answer == "draw") {
+          draw();
+        }
+      }
+    </script>
+  </body>
+</html>
